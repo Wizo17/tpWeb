@@ -2,11 +2,43 @@
 // La création d'un Dnd requière un canvas et un interacteur.
 // L'interacteur viendra dans un second temps donc ne vous en souciez pas au départ.
 function DnD(canvas, interactor) {
-	// Définir ici les attributs de la 'classe'
+  // Attributs de la 'classe'
+  this.posXI = 0;
+  this.posYI = 0;
+  this.posXF = 0;
+  this.posYF = 0;
+  this.avoirPression = false;
 
-	// Developper les 3 fonctions gérant les événements
+  // Fonctions gérant les événements
+  this.fonctionPression = function(evt) {
+    var res = getMousePosition(canvas, evt);
+    this.posXI = res.x;
+    this.posYI = res.y;
+    this.avoirPression = true;
+  }.bind(this);
 
-	// Associer les fonctions précédentes aux évènements du canvas.
+  this.fonctionDeplacement = function(evt) {
+    if(this.avoirPression) {
+      var res = getMousePosition(canvas, evt);
+      this.posXF = res.x;
+      this.posYF = res.y;
+    }
+  }.bind(this);
+
+  this.fonctionRelachement = function(evt) {
+    if(this.avoirPression) {
+      //var res = getMousePosition(canvas, evt);
+      //this.posXF = res.x;
+      //this.posYF = res.y;
+      this.avoirPression = false;
+      console.log('fin drag drop ' + this.posXI  + ' ' + this.posYI + ' ' + this.posXF + ' ' + this.posYF)
+    }
+  }.bind(this);
+
+  // Associer les fonctions précédentes aux évènements du canvas.
+  canvas.addEventListener('mousedown', this.fonctionPression, false);
+  canvas.addEventListener('mousemove', this.fonctionDeplacement, false);
+  canvas.addEventListener('mouseup', this.fonctionRelachement, false);
 };
 
 
