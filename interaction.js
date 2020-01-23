@@ -8,9 +8,12 @@ function DnD(canvas, interactor) {
   this.posXF = 0;
   this.posYF = 0;
   this.avoirPression = false;
+  this.interactor = interactor;
 
   // Fonctions gérant les événements
   this.fonctionPression = function(evt) {
+    this.interactor.onInteractionStart();
+
     var res = getMousePosition(canvas, evt);
     this.posXI = res.x;
     this.posYI = res.y;
@@ -19,6 +22,8 @@ function DnD(canvas, interactor) {
 
   this.fonctionDeplacement = function(evt) {
     if(this.avoirPression) {
+      this.interactor.onInteractionUpdate();
+
       var res = getMousePosition(canvas, evt);
       this.posXF = res.x;
       this.posYF = res.y;
@@ -27,9 +32,12 @@ function DnD(canvas, interactor) {
 
   this.fonctionRelachement = function(evt) {
     if(this.avoirPression) {
-      //var res = getMousePosition(canvas, evt);
-      //this.posXF = res.x;
-      //this.posYF = res.y;
+      this.interactor.onInteractionEnd();
+
+      var res = getMousePosition(canvas, evt);
+      this.posXF = res.x;
+      this.posYF = res.y;
+
       this.avoirPression = false;
       console.log('fin drag drop ' + this.posXI  + ' ' + this.posYI + ' ' + this.posXF + ' ' + this.posYF)
     }

@@ -28,23 +28,18 @@ function Forme(couleur, epaisseur) {
     }.bind(this);
 }
 
-function Rectangle(point, largeur, hauteur, couleur, epaisseur) {
+function Rectangle(pointI, pointF, couleur, epaisseur) {
     Forme.call(this, couleur, epaisseur);
 
-    this.point = point;
-    this.largeur = largeur;
-    this.hauteur = hauteur;
+    this.pointI = pointI;
+    this.pointF = pointF;
 
-    this.getPoint = function() {
-        return this.point;
+    this.getPointI = function() {
+        return this.pointI;
     }.bind(this);
 
-    this.getLargeur = function() {
-        return this.largeur;
-    }.bind(this);
-
-    this.getHauteur = function() {
-        return this.hauteur;
+    this.getPointF = function() {
+        return this.pointF;
     }.bind(this);
 }
 
